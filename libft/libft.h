@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 11:21:03 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/08 19:16:13 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/09 17:23:29 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 # define LOWER(x) x >= 97 && x <= 122
 # define UPPER(x) x >= 65 && x <= 90
 # define NUMBER(x) x >= 48 && x <= 57
 # define WHITESPACE(x) x == '\n' || x == ' ' || x == '\t' || x == '\r'
 # define BUFF_SIZE 4096
+# define MAX_INT 2147483647
+# define MIN_INT -2147483648
 
 typedef struct	s_list
 {
