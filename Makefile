@@ -6,7 +6,7 @@
 #    By: adubugra <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/07 18:20:10 by adubugra          #+#    #+#              #
-#    Updated: 2018/03/09 12:16:44 by adubugra         ###   ########.fr        #
+#    Updated: 2018/03/24 20:49:58 by adubugra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME	= fdf
 SRC		= main.c \
 		  helpers.c \
 		  controllers.c \
+		  get_grid.c \
 		  drawing.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))

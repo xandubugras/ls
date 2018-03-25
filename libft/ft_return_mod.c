@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   controllers.c                                      :+:      :+:    :+:   */
+/*   ft_mod.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/09 11:57:16 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/24 20:59:01 by adubugra         ###   ########.fr       */
+/*   Created: 2018/03/08 19:12:46 by adubugra          #+#    #+#             */
+/*   Updated: 2018/03/18 10:29:18 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fdf.h"
+#include <libft.h>
 
-int		on_key(int key, t_pointers *param)
+int		ft_return_mod(int i)
 {
-	int			i;
-	t_pointers	*pt;
-
-	pt = param;
-	i = key;
-	if (key == 53)
-	{
-		mlx_destroy_window(pt->mlx_ptr, pt->win_ptr);
-		pt->mlx_ptr = 0;
-		exit(0);
-	}
-	return (1);
+	if (i < 0)
+		return (-i);
+	return (i);
 }

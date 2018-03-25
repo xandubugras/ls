@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 11:21:03 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/09 17:23:29 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/24 20:11:32 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct	s_gnl
 
 void			ft_swap(int *i1, int *i2);
 
+int				ft_return_mod(int i);
+
 void			ft_mod(int *i1);
 
 int				get_next_line(int const fd, char **line);
@@ -65,8 +67,6 @@ int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcat(char *s1, const char *s2);
 
 char			*ft_strncat(char *s1, const char *s2, size_t n);
-
-
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 

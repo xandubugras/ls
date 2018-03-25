@@ -6,7 +6,7 @@
 #    By: adubugra <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/23 19:12:17 by adubugra          #+#    #+#              #
-#    Updated: 2018/03/08 19:16:27 by adubugra         ###   ########.fr        #
+#    Updated: 2018/03/24 20:19:45 by adubugra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS=ft_memset.c \
 				ft_strnstr.c \
 				ft_strcmp.c \
 				ft_strncmp.c \
+				ft_return_mod.c \
 				ft_atoi.c \
 				ft_isalpha.c \
 				ft_isdigit.c \
