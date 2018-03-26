@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 18:11:18 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/24 20:59:05 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/26 12:18:33 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 
 static void	free_grid(t_grid **grid)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	j = 0;
 	while (grid[j])
 	{
 		i = 0;
-		while (grid[j][i].last)
+		while (grid[j][i].last == 0)
 		{
-			free(&(grid[j][i]));
 			i++;
 		}
+		free(grid[j]);
 		j++;
 	}
+	free(grid[j]);
 }
 
 int			main(int argc, char **argv)
@@ -46,6 +47,8 @@ int			main(int argc, char **argv)
 	link_points(ptrs, grid);
 	mlx_key_hook(ptrs->win_ptr, on_key, ptrs);
 	mlx_loop(ptrs->mlx_ptr);
+	free(ptrs->mlx_ptr);
+	free(ptrs->win_ptr);
 	free(ptrs);
 	free_grid(grid);
 	return (0);

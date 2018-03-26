@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 11:58:11 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/24 20:52:42 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/26 12:16:32 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int			get_grid_height(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	i = 0;
 	while ((asd = get_next_line(fd, &content)) != 0)
+	{
 		i++;
+		free(content);
+	}
 	return (i);
 }
 
@@ -52,29 +55,30 @@ static void	free_splitted_line(char **splitted_line)
 	}
 }
 
-void		set_grid_line(char ***splitted_line, int fd, t_grid **grid, int j)
+void		set_grid_line(int fd, t_grid **grid, int j)
 {
-	int	i;
+	int		i;
+	char	**splitted_line;
 
-	i = get_grid_width_and_split(splitted_line, fd);
+	i = get_grid_width_and_split(&splitted_line, fd);
 	grid[j] = construct_grid(i);
 	grid[j][i - 1].last = 1;
 	i = 0;
 	while (1)
 	{
-		grid[j][i].z = ft_atoi((*splitted_line)[i]);
+		grid[j][i].z = ft_atoi((splitted_line)[i]);
 		grid[j][i].y = j * SCALE;
 		grid[j][i].x = i * SCALE;
 		if (grid[j][i].last)
 			break ;
 		i++;
 	}
-	free_splitted_line(*splitted_line);
+	free_splitted_line(splitted_line);
+	free(splitted_line);
 }
 
 t_grid		**get_grid(char *file_name)
 {
-	char	**splitted_line;
 	t_grid	**grid;
 	int		fd;
 	int		j;
@@ -87,9 +91,8 @@ t_grid		**get_grid(char *file_name)
 	j = 0;
 	while (j < height)
 	{
-		set_grid_line(&splitted_line, fd, grid, j);
+		set_grid_line(fd, grid, j);
 		j++;
 	}
-	free(splitted_line);
 	return (grid);
 }

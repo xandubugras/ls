@@ -6,14 +6,13 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 11:21:03 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/24 20:11:32 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/26 12:19:13 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
-# include <stdio.h>
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
