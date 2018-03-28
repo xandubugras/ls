@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 09:10:54 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 12:00:47 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 13:11:51 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,15 @@ void	sort_list(t_file **root)
 	prev = *root;
 	while (t)
 	{
-		print_list(*root);
-		printf("\n\n");
 		if (t->next && ft_strcmp(t->name, t->next->name) > 0)
 		{
+			tmp = t->next;
+			t->next = tmp->next;
+			tmp->next = t;
 			if (t == *root)
-			{
-				tmp = t->next;
-				t->next = t->next->next;
-				tmp->next = t;
 				*root = tmp;
-			}
-			else// if (prev->next == t)
-			{
-				tmp = t->next;
+			else
 				prev->next = tmp;
-				t->next = tmp->next;
-				tmp->next = t;
-			}
 			t = *root;
 			prev = *root;
 		}
@@ -81,7 +72,7 @@ void	print_list(t_file *root)
 {
 	while (root)
 	{
-		printf("%s->", root->name);
+		ft_printf("%s->", root->name);
 		//print_struct(root);
 		root = root->next;
 	}
