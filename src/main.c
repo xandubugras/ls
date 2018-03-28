@@ -6,50 +6,48 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 18:11:18 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/26 12:18:33 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 09:26:08 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fdf.h"
+#include "../include/ls.h"
 
-static void	free_grid(t_grid **grid)
-{
-	int		i;
-	int		j;
-
-	j = 0;
-	while (grid[j])
-	{
-		i = 0;
-		while (grid[j][i].last == 0)
-		{
-			i++;
-		}
-		free(grid[j]);
-		j++;
-	}
-	free(grid[j]);
-}
 
 int			main(int argc, char **argv)
 {
-	t_pointers	*ptrs;
-	t_grid		**grid;
+	int				i;
+	char			*target_name;
+	t_input 		*input;
 
-	if (argc != 2)
-		return (1);
-	grid = get_grid(argv[1]);
-	convert_to_3d(grid);
-	ptrs = malloc(sizeof(t_pointers));
-	ptrs->mlx_ptr = mlx_init();
-	ptrs->win_ptr = mlx_new_window(ptrs->mlx_ptr, WIN_WIDTH,
-			WIN_HEIGHT, "mlx 42");
-	link_points(ptrs, grid);
-	mlx_key_hook(ptrs->win_ptr, on_key, ptrs);
-	mlx_loop(ptrs->mlx_ptr);
-	free(ptrs->mlx_ptr);
-	free(ptrs->win_ptr);
-	free(ptrs);
-	free_grid(grid);
-	return (0);
+	system("clear");
+	target_name = ".";
+	input = new_input();
+	i = 1;
+	while (i < argc)
+	{
+		if (argv[i][0] == '-')
+			set_flags(argv[i], input);
+		else
+			break ;
+		i++;
+	}
+	ft_ls(&(argv[i]), input, argc - i, ".");
 }
+/*
+	if((directory = opendir(target_name)) == NULL)
+	{
+		target_name = ".";
+		//list_file_only
+		return (1);
+	}
+	while ((dir_info = readdir(directory)) != NULL)
+	{
+		ft_printf("file name: %s\n", dir_info->d_name);
+		ft_printf("file type: %d\n", (dir_info->d_type));
+		printf("file size: %lld\n", file_info.st_size);
+		printf("file type: %d\n\n", file_info.st_mode);
+	}
+	ls -l abc cdb
+	argc = 4
+	argc - i = 2
+*/

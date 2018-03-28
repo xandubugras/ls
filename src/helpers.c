@@ -5,27 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/24 20:49:13 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/26 12:18:44 by adubugra         ###   ########.fr       */
+/*   Created: 2018/03/27 11:32:32 by adubugra          #+#    #+#             */
+/*   Updated: 2018/03/27 15:06:27 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/fdf.h>
+#include "../include/ls.h"
 
-t_grid	*construct_grid(int num_of_grids)
+void	*print_no_file_dir_err(char *file_name)
 {
-	t_grid	*grid;
-	int		i;
-
-	grid = malloc(sizeof(t_grid) * num_of_grids);
-	i = 0;
-	while (i < num_of_grids)
-	{
-		grid[i].x = 0;
-		grid[i].y = 0;
-		grid[i].z = 0;
-		grid[i].last = 0;
-		i++;
-	}
-	return (grid);
+	ft_putstr_fd("ls: ", 2);
+	ft_putstr_fd(file_name, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	return (0);
 }

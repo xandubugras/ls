@@ -6,30 +6,25 @@
 #    By: adubugra <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/07 18:20:10 by adubugra          #+#    #+#              #
-#    Updated: 2018/03/24 20:49:58 by adubugra         ###   ########.fr        #
+#    Updated: 2018/03/28 09:28:56 by adubugra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= fdf
+NAME	= ls
 
 # src / obj files
 SRC		= main.c \
 		  helpers.c \
-		  controllers.c \
-		  get_grid.c \
-		  drawing.c
+		  ft_ls.c \
+		  t_list.c \
+		  t_file.c \
+		  input_info.c 
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
 # compiler
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g
-
-# mlx library
-MLX		= ./miniLibX/
-MLX_LIB	= $(addprefix $(MLX),mlx.a)
-MLX_INC	= -I ./miniLibX
-MLX_LNK	= -L ./miniLibX -l mlx -framework OpenGL -framework AppKit
 
 # ft library
 FT		= ./libft/
@@ -62,7 +57,6 @@ $(NAME): $(OBJ)
 clean:
 	rm -rf $(OBJDIR)
 	make -C $(FT) clean
-	make -C $(MLX) clean
 
 fclean: clean
 	rm -rf $(NAME)
