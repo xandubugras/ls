@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 09:10:54 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 15:56:03 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 16:54:13 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,73 @@ void	sort_list(t_file **root, t_input *input)
 	}
 }
 
-void	print_list(t_file *root)
+void	print_list(t_file *root, t_input *input)
 {
+	if (input->l)
+		ft_printf("total %d\n", get_sum_blocks(root, input));
 	while (root)
 	{
-		ft_printf("%s->", root->name);
-		//print_struct(root);
+		if (!root->go_in_dir)
+		{
+			if (input->a)
+			{
+				if (input->l)
+					print_details(root);
+				else
+					ft_printf("%s->", root->name);
+			}
+			else if (root->name[0] != '.')
+			{
+				if (input->l)
+					print_details(root);
+				else
+					ft_printf("%s->", root->name);
+			}
+		}
 		root = root->next;
 	}
 }
+
+void	print_details(t_file *f)
+{
+	char *time;
+
+	ft_printf("%c%c%c%c%c%c%c%c%c%c  ",f->type, f->o_read, f->o_write,
+			f->o_execute, f->g_read, f->g_write, f->g_execute, f->x_read, f->x_write, f->x_execute);
+	ft_printf("%d ", f->num_links);
+	ft_printf("%s  ", f->owner_name);
+	ft_printf("%s", f->group_name);
+	ft_printf("%8d ", f->file_size);
+	time = ctime((time_t *)&(f->time_modified));
+	time = ft_strndup(time, ft_strlen(time) - 1);
+	ft_printf("%s ", time);
+	free(time);
+	ft_printf("%s", f->name);
+	ft_printf("\n");
+}
+
+int		get_sum_blocks(t_file *root, t_input *input)
+{
+	int sum;
+
+	sum = 0;
+	while (root)
+	{
+		if (input->a)
+			sum += root->blocks;
+		else if (root->name[0] != '.')
+			sum += root->blocks;
+		root = root->next;
+	}
+	return (sum);
+}
+
+
+
+
+
+
+
+
+
+

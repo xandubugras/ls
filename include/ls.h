@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 15:55:24 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 16:53:31 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char 
 
 void	sort_list(t_file **root, t_input *input);
 
-void	print_list(t_file *root);
+void	print_list(t_file *root, t_input *input);
+
+void	print_details(t_file *f);
+
+int		get_sum_blocks(t_file *root, t_input *input);
 /*
 **----------------ft_ls.c------------------------
 */

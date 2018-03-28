@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:58:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 15:55:47 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 16:02:44 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 		while (target_num > 0)
 		{
 			added = add_tlist_end(&root, targets[target_num - 1], current_dir, 1);
-			if (added->type == 'd' && ft_strcmp(added->name, ".") && ft_strcmp(added->name, ".."))
+			if (added->type == 'd' && NOT_CURR_PREV_DIR(added))
 			{
 				added->go_in_dir = 1;
 				added->no_show = 1;
@@ -39,7 +39,7 @@ int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 		//create and set info of all files in current dir (only set the ones that start with . if -a)
 	}
 	sort_list(&root, input);
-	print_list(root);
+	print_list(root, input);
 	input = 0;
 		//if -R sets go_in_dir in all created folders
 		//put targets in right order (lexicographical default)
