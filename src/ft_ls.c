@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:58:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 09:31:54 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 11:36:22 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 {
 	t_file	*root;
-	
+	root = 0;
 	if (target_num != 0)
 	{
-		root = 0;
 		while (target_num > 0)
 		{
-			print_struct(add_tlist_end(&root, targets[target_num - 1], current_dir));
+			add_tlist_end(&root, targets[target_num - 1], current_dir, 1);
 			target_num--;
 		}
 		//create only mentioned targets;
@@ -29,9 +28,11 @@ int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 	}
 	else
 	{
-		create_file(0, current_dir);
+		root = create_all_files(current_dir);
 		//create and set info of all files in current dir (only set the ones that start with . if -a)
 	}
+	sort_list(&root);
+	//print_list(root);
 	input = 0;
 		//if -R sets go_in_dir in all created folders
 		//put targets in right order (lexicographical default)
@@ -70,6 +71,25 @@ t_file	*create_file(char *target_name, char *current_dir)
 		return ((t_file *)print_no_file_dir_err(target_name));
 	return (new_f);
 }
+
+t_file	*create_all_files(char *current_dir)
+{
+	DIR				*directory;
+	struct dirent	*dir_info;
+	t_file			*root;
+
+	root = 0;
+	if ((directory = opendir(current_dir)) == NULL)
+		return ((t_file *)print_no_file_dir_err(current_dir));
+	dir_info = readdir(directory);
+	while (dir_info != NULL)
+	{
+		add_tlist_end(&root, dir_info->d_name, current_dir, 0);
+		dir_info = readdir(directory);
+	}
+	return (root);
+}
+
 
 char	*get_directory(char *target_name, char *current_dir)
 {

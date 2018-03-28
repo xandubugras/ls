@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 09:28:34 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 11:18:43 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ typedef struct	s_input
 
 typedef struct	s_file
 {
-	int				go_in_dir;
+	char			go_in_dir;
 	char			type;
-	int				o_read;
-	int				o_write;
-	int				o_execute;
-	int				g_read;
-	int				g_write;
-	int				g_execute;
-	int				x_read;
-	int				x_write;
-	int				x_execute;
-	int				num_links;
+	char			o_read;
+	char			o_write;
+	char			o_execute;
+	char			g_read;
+	char			g_write;
+	char			g_execute;
+	char			x_read;
+	char			x_write;
+	char			x_execute;
 	char			*owner_name;
 	char			*group_name;
+	int				num_links;
 	long long		file_size;
 	char			*time_created;
 	char			*time_modified;
@@ -72,13 +72,19 @@ void	set_permission_and_type(t_file *new_file, struct stat file_info);
 /*
 **----------------t_list.c------------------------
 */
-t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir);
+t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char d);
+
+void	sort_list(t_file **root);
+
+void	print_list(t_file *root);
 /*
 **----------------ft_ls.c------------------------
 */
 char	*get_directory(char *target_name, char *current_dir);
 
 t_file	*create_file(char *target_name, char *current_dir);
+
+t_file	*create_all_files(char *current_dir);
 
 int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir);
 
