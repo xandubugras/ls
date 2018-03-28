@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 19:43:44 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 09:06:56 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 15:56:11 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_file	*new_file(void)
 	new->time_modified = 0;
 	new->time_last_opened = 0;
 	new->next = NULL;
+	new->no_show = 0;
 	return (new);
 }
 
@@ -56,9 +57,9 @@ int		set_file(char *target_name, t_file *new_file, char *current_dir)
 	}
 	new_file->name = target_name;
 	new_file->directory = current_dir;
-	new_file->time_created = ctime(&(file_info.st_birthtimespec.tv_sec));
-	new_file->time_modified = ctime(&(file_info.st_mtimespec.tv_sec));
-	new_file->time_last_opened = ctime(&(file_info.st_atimespec.tv_sec));
+	new_file->time_created = file_info.st_birthtimespec.tv_sec;
+	new_file->time_modified = file_info.st_mtimespec.tv_sec;
+	new_file->time_last_opened = file_info.st_atimespec.tv_sec;
 	new_file->file_size = file_info.st_size;
 	new_file->num_links = file_info.st_nlink;
 	new_file->blocks = file_info.st_blocks;

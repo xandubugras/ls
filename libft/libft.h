@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 11:21:03 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/27 15:53:23 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 13:35:09 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,8 @@ char			*ft_strnstr(const char *haystack,
 
 char			*ft_strcpy(char *dst, const char *src);
 
+char			*ft_numcpy(long long dst, long long src);
+
 char			*ft_strncpy(char *dst, const char *src, size_t len);
 
 wchar_t			*ft_wstrncpy(wchar_t *dst, const wchar_t *src, size_t len);
@@ -193,6 +195,8 @@ wchar_t			*ft_wstrncpy(wchar_t *dst, const wchar_t *src, size_t len);
 unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size);
 
 int				ft_strcmp(const char *s1, const char *s2);
+
+int				ft_numcmp(const long long s1, const long long s2);
 
 char			*ft_strcat(char *s1, const char *s2);
 

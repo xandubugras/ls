@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 11:18:43 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 15:55:24 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LS_H
 # include "../libft/libft.h"
 # define debug ft_printf("\nHERE\n");
+# define NOT_CURR_PREV_DIR(added) (ft_strcmp(added->name, ".") && ft_strcmp(added->name, ".."))
 
 typedef struct	s_input
 {
@@ -41,12 +42,13 @@ typedef struct	s_file
 	char			*group_name;
 	int				num_links;
 	long long		file_size;
-	char			*time_created;
-	char			*time_modified;
-	char			*time_last_opened;
+	long long		time_created;
+	long long		time_modified;
+	long long		time_last_opened;
 	char			*directory;
 	char			*name;
 	int				blocks;
+	int				no_show;
 	struct s_file	*next;
 }				t_file;
 /*
@@ -59,6 +61,8 @@ void	set_flags(char *arg, t_input *input);
 **----------------helpers.c------------------------
 */
 void	*print_no_file_dir_err(char *file_name);
+
+int		compare(t_input *input, t_file *f);
 /*
 **----------------t_file.c------------------------
 */
@@ -74,7 +78,7 @@ void	set_permission_and_type(t_file *new_file, struct stat file_info);
 */
 t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char d);
 
-void	sort_list(t_file **root);
+void	sort_list(t_file **root, t_input *input);
 
 void	print_list(t_file *root);
 /*

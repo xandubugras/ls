@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 09:10:54 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 13:11:51 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 15:56:03 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char 
 	return (t->next);
 }
 
-void	sort_list(t_file **root)
+void	sort_list(t_file **root, t_input *input)
 {
 	t_file	*t;
 	t_file	*tmp;
@@ -47,7 +47,7 @@ void	sort_list(t_file **root)
 	prev = *root;
 	while (t)
 	{
-		if (t->next && ft_strcmp(t->name, t->next->name) > 0)
+		if (t->next && compare(input, t))//ft_numcmp(t->time_modified, t->next->time_modified) < 0)
 		{
 			tmp = t->next;
 			t->next = tmp->next;
@@ -61,8 +61,7 @@ void	sort_list(t_file **root)
 		}
 		else
 		{
-			if (t != *root)
-				prev = prev->next;
+			prev = t != *root ? prev->next : prev;
 			t = t->next;
 		}
 	}
