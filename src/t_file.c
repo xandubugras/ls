@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 19:43:44 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 21:39:20 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 09:52:28 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_file	*new_file(void)
 	return (new);
 }
 
-int		set_file(char *target_name, t_file *new_file, char *current_dir)
+t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 {
 	struct stat		file_info;
 	struct passwd	*pwd;
@@ -77,7 +77,7 @@ int		set_file(char *target_name, t_file *new_file, char *current_dir)
 	new_file->owner_name = pwd->pw_name;
 	new_file->group_name = grp->gr_name;;
 	set_permission_and_type(new_file, file_info);
-	return (1);
+	return (new_file);
 }
 
 void	set_permission_and_type(t_file *new_file, struct stat file_info)
@@ -108,6 +108,34 @@ void	set_permission_and_type(t_file *new_file, struct stat file_info)
 	new_file->x_write = file_info.st_mode & S_IWOTH ? 'w' : '-';
 	new_file->x_execute = file_info.st_mode & S_IXOTH ? 'x' : '-';
 }	
+
+t_file	*create_file(char *target_name, char *current_dir)
+{
+	DIR				*directory;
+	struct dirent	*dir_info;
+	t_file			*new_f;
+	char			*short_name;
+
+	short_name = target_name;
+	if (target_name && ft_strchr(target_name, '/'))
+	{
+		current_dir = get_directory(target_name, current_dir);
+		short_name = ft_get_last_char(target_name, '/') + 1;
+	}
+	if ((directory = opendir(current_dir)) == NULL)
+		return ((t_file *)print_no_file_dir_err(current_dir));
+	dir_info = readdir(directory);
+	while (target_name && dir_info != NULL && ft_strcmp(dir_info->d_name, short_name))
+		dir_info = readdir(directory);
+	if (!target_name)
+		target_name = ft_strdup(dir_info->d_name);
+	if (dir_info != NULL)
+		new_f = set_file(target_name, new_file(), current_dir);
+	else
+		return ((t_file *)print_no_file_dir_err(target_name));
+	return (new_f);
+}
+
 void	print_struct(t_file *new)
 {
 	ft_printf("\nname: %s\n", new->name);

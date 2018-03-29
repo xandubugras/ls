@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 21:30:06 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 10:10:18 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,26 @@ void	*print_no_file_dir_err(char *file_name);
 int		compare(t_input *input, t_file *f);
 
 char	*set_dir_path(char *current_dir, char *target_name);
+
+void	remove_slash_end(char *str);
+
+char	*get_directory(char *target_name, char *current_dir);
 /*
 **----------------t_file.c------------------------
 */
 t_file	*new_file(void);
 
-int		set_file(char *target_name, t_file *new_file, char *current_dir);
+t_file	*set_file(char *target_name, t_file *new_file, char *current_dir);
 
 void	print_struct(t_file *new);
 
 void	set_permission_and_type(t_file *new_file, struct stat file_info);
+
+t_file	*create_file(char *target_name, char *current_dir);
 /*
 **----------------t_list.c------------------------
 */
-t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char d);
+t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir);
 
 void	sort_list(t_file **root, t_input *input);
 
@@ -92,12 +98,14 @@ int		get_sum_blocks(t_file *root, t_input *input);
 /*
 **----------------ft_ls.c------------------------
 */
-char	*get_directory(char *target_name, char *current_dir);
 
-t_file	*create_file(char *target_name, char *current_dir);
+t_file	*create_all_files(char *current_dir, t_input *input);
 
-t_file	*create_all_files(char *current_dir);
+t_file	*create_input_files(int target_num, char **targets,char *current_dir);
 
 int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir);
 
+void	set_recursion(t_file *root);
+
+void	handle_recursion(t_file *root, t_input *input, char *current_dir);
 #endif

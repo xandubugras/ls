@@ -6,13 +6,13 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 09:10:54 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 21:30:33 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 10:10:17 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ls.h"
 
-t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char d)
+t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir)
 {
 	t_file *t;
 
@@ -24,8 +24,6 @@ t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char 
 			debug
 			return (0);
 		}
-		if (d && ft_strcmp((*root)->name, ".") && ft_strcmp((*root)->name, "..") && (*root)->type == 'd')
-			(*root)->go_in_dir = 1;
 		return (*root);
 	}
 	t = *root;
@@ -33,8 +31,6 @@ t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char 
 		t = t->next;
 	if ((t->next = create_file(target_name, current_dir)) == NULL)
 		return (0);
-	if (d && ft_strcmp(t->next->name, ".") && ft_strcmp(t->next->name, "..") && t->next->type == 'd')
-		t->next->go_in_dir = 1;
 	return (t->next);
 }
 
@@ -70,30 +66,21 @@ void	sort_list(t_file **root, t_input *input)
 
 void	print_list(t_file *root, t_input *input)
 {
-	if (input->l)
+	if (input->l && !root->go_in_dir)
 		ft_printf("total %d\n", get_sum_blocks(root, input));
 	while (root)
 	{
 		if (!root->go_in_dir)
 		{
-			if (input->a)
-			{
 				if (input->l)
 					print_details(root);
 				else
-					ft_printf("%s\t", root->name);
-			}
-			else if (root->name[0] != '.')
-			{
-				if (input->l)
-					print_details(root);
-				else
-					ft_printf("%s\t", root->name);
-			}
+					ft_printf("%s\n", root->name);
 		}
 		root = root->next;
 	}
-	ft_printf("\n");
+	if (!input->l)
+		ft_putchar('\n');
 }
 
 void	print_basic(t_file *root)
