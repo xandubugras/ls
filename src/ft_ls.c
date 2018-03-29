@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:58:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 16:02:44 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 21:36:16 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 	}
 	sort_list(&root, input);
 	print_list(root, input);
-	input = 0;
+	//print_basic(root);
 		//if -R sets go_in_dir in all created folders
 		//put targets in right order (lexicographical default)
 		//list targets properly
@@ -72,7 +72,7 @@ t_file	*create_file(char *target_name, char *current_dir)
 	{
 		new_f = new_file();
 		set_file(target_name, new_f, current_dir);
-		//print_struct(new_f);
+	//	print_struct(new_f);
 	}
 	else
 		return ((t_file *)print_no_file_dir_err(target_name));

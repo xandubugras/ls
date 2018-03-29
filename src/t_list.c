@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 09:10:54 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 16:54:13 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 21:30:33 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir, char 
 		if ((*root = create_file(target_name, current_dir)) == NULL)
 		{
 			*root = 0;
+			debug
 			return (0);
 		}
 		if (d && ft_strcmp((*root)->name, ".") && ft_strcmp((*root)->name, "..") && (*root)->type == 'd')
@@ -80,16 +81,26 @@ void	print_list(t_file *root, t_input *input)
 				if (input->l)
 					print_details(root);
 				else
-					ft_printf("%s->", root->name);
+					ft_printf("%s\t", root->name);
 			}
 			else if (root->name[0] != '.')
 			{
 				if (input->l)
 					print_details(root);
 				else
-					ft_printf("%s->", root->name);
+					ft_printf("%s\t", root->name);
 			}
 		}
+		root = root->next;
+	}
+	ft_printf("\n");
+}
+
+void	print_basic(t_file *root)
+{
+	while (root)
+	{
+		ft_printf("%s->", root->name);
 		root = root->next;
 	}
 }
@@ -127,13 +138,3 @@ int		get_sum_blocks(t_file *root, t_input *input)
 	}
 	return (sum);
 }
-
-
-
-
-
-
-
-
-
-

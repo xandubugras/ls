@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 16:53:31 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 21:30:06 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	set_flags(char *arg, t_input *input);
 void	*print_no_file_dir_err(char *file_name);
 
 int		compare(t_input *input, t_file *f);
+
+char	*set_dir_path(char *current_dir, char *target_name);
 /*
 **----------------t_file.c------------------------
 */
@@ -83,6 +85,8 @@ void	sort_list(t_file **root, t_input *input);
 void	print_list(t_file *root, t_input *input);
 
 void	print_details(t_file *f);
+
+void	print_basic(t_file *f);
 
 int		get_sum_blocks(t_file *root, t_input *input);
 /*

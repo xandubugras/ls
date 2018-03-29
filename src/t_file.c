@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 19:43:44 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 15:56:11 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/28 21:39:20 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,19 @@ int		set_file(char *target_name, t_file *new_file, char *current_dir)
 	struct stat		file_info;
 	struct passwd	*pwd;
 	struct group	*grp;
+	char			*full_path;
 
-	if (lstat(target_name, &file_info) != 0)
+	if (ft_strcmp(current_dir, "."))
+		full_path = set_dir_path(current_dir, target_name);
+	else
+		full_path = target_name;
+	if (lstat(full_path, &file_info) != 0)
 	{
-		ft_printf("Error openning file\n");
+		ft_printf("Error openning file %s: in set_file @ t_file.c\n", target_name);
 		return (0);
 	}
+	if (ft_strcmp(current_dir, "."))
+		free(full_path);
 	new_file->name = target_name;
 	new_file->directory = current_dir;
 	new_file->time_created = file_info.st_birthtimespec.tv_sec;
