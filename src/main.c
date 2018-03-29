@@ -6,13 +6,15 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 18:11:18 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/28 21:39:37 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 15:29:33 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ls.h"
 
-
+/*
+** the main is responsible for setting the flags based on the arguments
+*/
 int			main(int argc, char **argv)
 {
 	int				i;
@@ -32,23 +34,6 @@ int			main(int argc, char **argv)
 		i++;
 	}
 	ft_ls(&(argv[i]), input, argc - i, ".");
+	free(input);
+	while (1);
 }
-
-/*
-	if((directory = opendir(target_name)) == NULL)
-	{
-		target_name = ".";
-		//list_file_only
-		return (1);
-	}
-	while ((dir_info = readdir(directory)) != NULL)
-	{
-		ft_printf("file name: %s\n", dir_info->d_name);
-		ft_printf("file type: %d\n", (dir_info->d_type));
-		printf("file size: %lld\n", file_info.st_size);
-		printf("file type: %d\n\n", file_info.st_mode);
-	}
-	ls -l abc cdb
-	argc = 4
-	argc - i = 2
-*/

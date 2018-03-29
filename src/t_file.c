@@ -6,12 +6,15 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 19:43:44 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 09:52:28 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 15:34:20 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ls.h"
 
+/*
+**Sets everything to 0;
+*/
 t_file	*new_file(void)
 {
 	t_file *new;
@@ -20,7 +23,6 @@ t_file	*new_file(void)
 		ft_putstr_fd("ERROR CREATING FILE STRUCT\n", 2);
 	new->name = 0;
 	new->go_in_dir = 0;
-	new->directory = 0;
 	new->type = 0;
 	new->o_read = 0;
 	new->o_write = 0;
@@ -36,14 +38,14 @@ t_file	*new_file(void)
 	new->owner_name = 0;
 	new->group_name = 0;
 	new->file_size = 0;
-	new->time_created = 0;
 	new->time_modified = 0;
-	new->time_last_opened = 0;
 	new->next = NULL;
-	new->no_show = 0;
 	return (new);
 }
 
+/*
+**sets the information for the files
+*/
 t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 {
 	struct stat		file_info;
@@ -63,10 +65,7 @@ t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 	if (ft_strcmp(current_dir, "."))
 		free(full_path);
 	new_file->name = target_name;
-	new_file->directory = current_dir;
-	new_file->time_created = file_info.st_birthtimespec.tv_sec;
 	new_file->time_modified = file_info.st_mtimespec.tv_sec;
-	new_file->time_last_opened = file_info.st_atimespec.tv_sec;
 	new_file->file_size = file_info.st_size;
 	new_file->num_links = file_info.st_nlink;
 	new_file->blocks = file_info.st_blocks;
@@ -80,6 +79,9 @@ t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 	return (new_file);
 }
 
+/*
+**permissions and type
+*/
 void	set_permission_and_type(t_file *new_file, struct stat file_info)
 {
 	if (file_info.st_mode & S_IFREG)
@@ -109,6 +111,9 @@ void	set_permission_and_type(t_file *new_file, struct stat file_info)
 	new_file->x_execute = file_info.st_mode & S_IXOTH ? 'x' : '-';
 }	
 
+/*
+**gets the information and reates the object accordingly
+*/
 t_file	*create_file(char *target_name, char *current_dir)
 {
 	DIR				*directory;
@@ -136,11 +141,13 @@ t_file	*create_file(char *target_name, char *current_dir)
 	return (new_f);
 }
 
+/*
+**Debug helping function that prints the struct 
+*/
 void	print_struct(t_file *new)
 {
 	ft_printf("\nname: %s\n", new->name);
 	ft_printf("indir: %d\n", new->go_in_dir);
-	ft_printf("dir: %s\n", new->directory);
 	ft_printf("type: %c\n", new->type);
 	ft_printf("o_read: %c\n", new->o_read);
 	ft_printf("owrite: %c\n", new->o_write);
@@ -156,7 +163,5 @@ void	print_struct(t_file *new)
 	ft_printf("ownername: %s\n", new->owner_name);
 	ft_printf("ownergroup: %s\n", new->group_name);
 	ft_printf("size: %lld\n", new->file_size);
-	ft_printf("created: %s", new->time_created);
-	ft_printf("modified: %s",new->time_modified);
-	ft_printf("opened: %s", new->time_last_opened);
+	ft_printf("modified: %lld",new->time_modified);
 }

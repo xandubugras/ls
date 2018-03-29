@@ -6,15 +6,22 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:58:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 10:03:09 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 15:28:35 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ls.h"
 
+/*
+**ft_ls is the main controlling functions. it first creates a list of 
+**all the files to be displayed, with their respective info
+**after that it sorts the list accordingly, prints it and then
+**handles the recursion.
+*/
 int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 {
 	t_file	*root;
+	t_file	*buf;
 
 	root = 0;
 	if (target_num != 0)
@@ -22,32 +29,35 @@ int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 	else
 		root = create_all_files(current_dir, input);
 	sort_list(&root, input);
-	print_basic(root);
-	//print_list(root, input);
+	print_list(root, input);
 	if (input->R)
 		set_recursion(root);
 	handle_recursion(root, input, current_dir);
-	//print_basic(root);
-		//if -R sets go_in_dir in all created folders
-		//put targets in right order (lexicographical default)
-		//list targets properly
-		//while loop until go_in_dirs are over recursively calling*/
-		//not add . folder if a is not
-		//only show name if number of recursives is greater than 1
-		//remove '/' of folder if input by user
+	buf = root;
+	while (buf)
+	{
+		root = root->next;
+		free(buf);
+		buf = root;
+	}
+	//only show name if number of recursives is greater than 1
 	return (0);
 }
-	
+
+/*
+**In case the user doesn't input a directory, it lists all
+**objects in the current directory
+*/
 t_file	*create_all_files(char *current_dir, t_input *input)
 {
 	DIR				*directory;
 	struct dirent	*dir_info;
 	t_file			*root;
 
-	root = 0;
 	if ((directory = opendir(current_dir)) == NULL)
 		return ((t_file *)print_no_file_dir_err(current_dir));
 	dir_info = readdir(directory);
+	root = 0;
 	while (dir_info != NULL)
 	{
 		if (dir_info->d_name[0] != '.' || input->a)
@@ -57,6 +67,9 @@ t_file	*create_all_files(char *current_dir, t_input *input)
 	return (root);
 }
 
+/*
+**In case user does insert targets, this function only adds those to list
+*/
 t_file	*create_input_files(int target_num, char **targets, char *current_dir)
 {
 	t_file	*buf;
@@ -67,12 +80,21 @@ t_file	*create_input_files(int target_num, char **targets, char *current_dir)
 	{
 		remove_slash_end(targets[target_num - 1]);
 		buf = add_tlist_end(&root, targets[target_num - 1], current_dir);
-		if (buf->type == 'd' && NOT_CURR_PREV_DIR(buf))
-			buf->go_in_dir = 1;
+		if (buf)
+		{
+			if (buf->type == 'd' && NOT_CURR_PREV_DIR(buf))
+				buf->go_in_dir = 1;
+		}
+		else
+			return (0);
 		target_num--;
 	}
 	return (root);
 }
+/*
+**After sortinf, if the -R is on, this function sets all dir in
+**the list to be recursively called
+*/
 
 void	set_recursion(t_file *root)
 {
@@ -86,6 +108,9 @@ void	set_recursion(t_file *root)
 		buf = buf->next;
 	}
 }
+/*
+**Actually calls all the directories
+*/
 
 void	handle_recursion(t_file *root, t_input *input, char *current_dir)
 {

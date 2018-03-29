@@ -6,11 +6,11 @@
 #    By: adubugra <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/07 18:20:10 by adubugra          #+#    #+#              #
-#    Updated: 2018/03/28 20:08:02 by adubugra         ###   ########.fr        #
+#    Updated: 2018/03/29 15:14:58 by adubugra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= ls
+NAME	= ft_ls
 
 # src / obj files
 SRC		= main.c \

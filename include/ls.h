@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 10:10:18 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 15:33:28 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	print_details(t_file *f);
 
 void	print_basic(t_file *f);
 
-int		get_sum_blocks(t_file *root, t_input *input);
+int		get_sum_blocks(t_file *root);
 /*
 **----------------ft_ls.c------------------------
 */
