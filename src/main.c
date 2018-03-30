@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 18:11:18 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/30 08:01:17 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/30 13:00:51 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,4 @@ int		main(int argc, char **argv)
 	ft_ls(&(argv[i]), input, argc - i, target_name);
 	free(target_name);
 	free(input);
-	while(1);
 }
