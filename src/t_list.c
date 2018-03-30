@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 09:10:54 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 15:21:26 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:54:09 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 **If list is empty, adds the first, else, adds it to the end
 */
+
 t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir)
 {
 	t_file *t;
@@ -32,6 +33,7 @@ t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir)
 		return (0);
 	return (t->next);
 }
+
 /*
 **uses bubble sort to sort the linked list
 */
@@ -63,13 +65,14 @@ void	sort_list(t_file **root, t_input *input)
 			t = t->next;
 		}
 }
+
 /*
 **prints the list accordingly
 */
 
 void	print_list(t_file *root, t_input *input)
 {
-	t_file *buf;
+	t_file	*buf;
 	int		i;
 
 	i = 0;
@@ -91,21 +94,7 @@ void	print_list(t_file *root, t_input *input)
 	if (!input->l && i)
 		ft_putchar('\n');
 }
-/*
-**
-*/
 
-void	print_basic(t_file *root)
-{
-	t_file *buf;
-
-	buf = root;
-	while (buf)
-	{
-		ft_printf("%s->\n", buf->name);
-		buf = buf->next;
-	}
-}
 /*
 **prints -l details that are saved to file
 */
@@ -114,8 +103,9 @@ void	print_details(t_file *f)
 {
 	char *time;
 
-	ft_printf("%c%c%c%c%c%c%c%c%c%c  ",f->type, f->o_read, f->o_write,
-			f->o_execute, f->g_read, f->g_write, f->g_execute, f->x_read, f->x_write, f->x_execute);
+	ft_printf("%c%c%c%c%c%c%c%c%c%c  ", f->type, f->o_read, f->o_write,
+			f->o_execute, f->g_read, f->g_write, f->g_execute, f->x_read,
+			f->x_write, f->x_execute);
 	ft_printf("%d ", f->num_links);
 	ft_printf("%s  ", f->owner_name);
 	ft_printf("%s", f->group_name);
@@ -128,6 +118,7 @@ void	print_details(t_file *f)
 	ft_printf("%s", f->name);
 	ft_printf("\n");
 }
+
 /*
 **sums num of blocks for -l
 */

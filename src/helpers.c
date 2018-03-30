@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:32:32 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 09:40:48 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:58:28 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ void	*print_no_file_dir_err(char *file_name)
 	return (0);
 }
 
+/*
+**compares name if no flags, if -t compares modified dates
+*/
+
 int		compare(t_input *input, t_file *f)
 {
 	int i;
 
-	i = input->t ? ft_numcmp(f->time_modified, f->next->time_modified) < 0:
+	i = input->t ? ft_numcmp(f->time_modified, f->next->time_modified) < 0 :
 		ft_strcmp(f->name, f->next->name) > 0;
 	if (input->r)
 	{
@@ -35,6 +39,10 @@ int		compare(t_input *input, t_file *f)
 	}
 	return (i);
 }
+
+/*
+**adds current path to the file name
+*/
 
 char	*set_dir_path(char *current_dir, char *target_name)
 {

@@ -6,20 +6,19 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 15:33:28 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:07:55 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LS_H
 # define LS_H
 # include "../libft/libft.h"
-# define debug ft_printf("\nHERE\n");
-# define NOT_CURR_PREV_DIR(added) (ft_strcmp(added->name, ".") && ft_strcmp(added->name, ".."))
+# define NOT_CUR_DIR(x) (ft_strcmp(x->name, ".") && ft_strcmp(x->name, ".."))
 
 typedef struct	s_input
 {
 	int l;
-	int R;
+	int ur;
 	int a;
 	int r;
 	int t;
@@ -42,70 +41,66 @@ typedef struct	s_file
 	char			*group_name;
 	int				num_links;
 	long long		file_size;
-	long long		time_created;
 	long long		time_modified;
-	long long		time_last_opened;
-	char			*directory;
 	char			*name;
 	int				blocks;
-	int				no_show;
 	struct s_file	*next;
 }				t_file;
 /*
 **----------------input_info.c--------------------
 */
-t_input	*new_input(void);
+t_input			*new_input(void);
 
-void	set_flags(char *arg, t_input *input);
+void			set_flags(char *arg, t_input *input);
 /*
 **----------------helpers.c------------------------
 */
-void	*print_no_file_dir_err(char *file_name);
+void			*print_no_file_dir_err(char *file_name);
 
-int		compare(t_input *input, t_file *f);
+int				compare(t_input *input, t_file *f);
 
-char	*set_dir_path(char *current_dir, char *target_name);
+char			*set_dir_path(char *curr, char *target_name);
 
-void	remove_slash_end(char *str);
+void			remove_slash_end(char *str);
 
-char	*get_directory(char *target_name, char *current_dir);
+char			*get_directory(char *target_name, char *curr);
 /*
 **----------------t_file.c------------------------
 */
-t_file	*new_file(void);
+t_file			*new_file(void);
 
-t_file	*set_file(char *target_name, t_file *new_file, char *current_dir);
+t_file			*set_file(char *target_name, t_file *new_file, char *curr);
 
-void	print_struct(t_file *new);
+void			print_struct(t_file *new);
 
-void	set_permission_and_type(t_file *new_file, struct stat file_info);
+void			set_permission_and_type(t_file *new_file, struct stat f_info);
 
-t_file	*create_file(char *target_name, char *current_dir);
+t_file			*create_file(char *target_name, char *curr);
 /*
 **----------------t_list.c------------------------
 */
-t_file	*add_tlist_end(t_file **root, char *target_name, char *current_dir);
+t_file			*add_tlist_end(t_file **root, char *target_name, char *curr);
 
-void	sort_list(t_file **root, t_input *input);
+void			sort_list(t_file **root, t_input *input);
 
-void	print_list(t_file *root, t_input *input);
+void			print_list(t_file *root, t_input *input);
 
-void	print_details(t_file *f);
+void			print_details(t_file *f);
 
-void	print_basic(t_file *f);
+void			print_basic(t_file *f);
 
-int		get_sum_blocks(t_file *root);
+int				get_sum_blocks(t_file *root);
 /*
 **----------------ft_ls.c------------------------
 */
 
-t_file	*create_all_files(char *current_dir, t_input *input);
+t_file			*create_all_files(char *curr, t_input *input);
 
-t_file	*create_input_files(int target_num, char **targets,char *current_dir);
+t_file			*create_input_files(int target_num, char **targets, char *curr);
 
-int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir);
+int				ft_ls(char **targets, t_input *inp, int target_num, char *curr);
 
-void	set_recursion(t_file *root);
+void			set_recursion(t_file *root);
 
-void	handle_recursion(t_file *root, t_input *input, char *current_dir);
+void			handle_recursion(t_file *root, t_input *input, char *curr);
 #endif

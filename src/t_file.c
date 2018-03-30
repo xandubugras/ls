@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 19:43:44 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 15:34:20 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:07:04 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 **Sets everything to 0;
 */
+
 t_file	*new_file(void)
 {
 	t_file *new;
@@ -46,6 +47,7 @@ t_file	*new_file(void)
 /*
 **sets the information for the files
 */
+
 t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 {
 	struct stat		file_info;
@@ -58,23 +60,18 @@ t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 	else
 		full_path = target_name;
 	if (lstat(full_path, &file_info) != 0)
-	{
-		ft_printf("Error openning file %s: in set_file @ t_file.c\n", target_name);
 		return (0);
-	}
 	if (ft_strcmp(current_dir, "."))
 		free(full_path);
-	new_file->name = target_name;
+	new_file->name = ft_strdup(target_name);
 	new_file->time_modified = file_info.st_mtimespec.tv_sec;
 	new_file->file_size = file_info.st_size;
 	new_file->num_links = file_info.st_nlink;
 	new_file->blocks = file_info.st_blocks;
 	pwd = getpwuid(file_info.st_uid);
 	grp = getgrgid(file_info.st_gid);
-	if(!pwd || !grp)
-		ft_putstr_fd("puid not found", 2);
-	new_file->owner_name = pwd->pw_name;
-	new_file->group_name = grp->gr_name;;
+	new_file->owner_name = ft_strdup(pwd->pw_name);
+	new_file->group_name = ft_strdup(grp->gr_name);
 	set_permission_and_type(new_file, file_info);
 	return (new_file);
 }
@@ -82,6 +79,7 @@ t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 /*
 **permissions and type
 */
+
 void	set_permission_and_type(t_file *new_file, struct stat file_info)
 {
 	if (file_info.st_mode & S_IFREG)
@@ -109,11 +107,12 @@ void	set_permission_and_type(t_file *new_file, struct stat file_info)
 	new_file->x_read = file_info.st_mode & S_IROTH ? 'r' : '-';
 	new_file->x_write = file_info.st_mode & S_IWOTH ? 'w' : '-';
 	new_file->x_execute = file_info.st_mode & S_IXOTH ? 'x' : '-';
-}	
+}
 
 /*
 **gets the information and reates the object accordingly
 */
+
 t_file	*create_file(char *target_name, char *current_dir)
 {
 	DIR				*directory;
@@ -122,6 +121,7 @@ t_file	*create_file(char *target_name, char *current_dir)
 	char			*short_name;
 
 	short_name = target_name;
+	current_dir = ft_strdup(current_dir);
 	if (target_name && ft_strchr(target_name, '/'))
 	{
 		current_dir = get_directory(target_name, current_dir);
@@ -130,20 +130,22 @@ t_file	*create_file(char *target_name, char *current_dir)
 	if ((directory = opendir(current_dir)) == NULL)
 		return ((t_file *)print_no_file_dir_err(current_dir));
 	dir_info = readdir(directory);
-	while (target_name && dir_info != NULL && ft_strcmp(dir_info->d_name, short_name))
+	while (target_name && dir_info && ft_strcmp(dir_info->d_name, short_name))
 		dir_info = readdir(directory);
-	if (!target_name)
-		target_name = ft_strdup(dir_info->d_name);
-	if (dir_info != NULL)
-		new_f = set_file(target_name, new_file(), current_dir);
-	else
+	target_name = target_name == 0 && dir_info ? dir_info->d_name : target_name;
+	if (!dir_info)
 		return ((t_file *)print_no_file_dir_err(target_name));
+	else
+		new_f = set_file(target_name, new_file(), current_dir);
+	closedir(directory);
+	free(current_dir);
 	return (new_f);
 }
 
 /*
-**Debug helping function that prints the struct 
+**Debug helping function that prints the struct
 */
+
 void	print_struct(t_file *new)
 {
 	ft_printf("\nname: %s\n", new->name);
@@ -163,5 +165,5 @@ void	print_struct(t_file *new)
 	ft_printf("ownername: %s\n", new->owner_name);
 	ft_printf("ownergroup: %s\n", new->group_name);
 	ft_printf("size: %lld\n", new->file_size);
-	ft_printf("modified: %lld",new->time_modified);
+	ft_printf("modified: %lld", new->time_modified);
 }

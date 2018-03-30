@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 18:11:18 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 15:29:33 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 17:08:24 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 /*
 ** the main is responsible for setting the flags based on the arguments
 */
-int			main(int argc, char **argv)
+
+int		main(int argc, char **argv)
 {
 	int				i;
 	char			*target_name;
-	t_input 		*input;
+	t_input			*input;
 
-	system("clear");
-	target_name = ".";
+	target_name = ft_strdup(".");
 	input = new_input();
 	i = 1;
 	while (i < argc)
@@ -33,7 +33,7 @@ int			main(int argc, char **argv)
 			break ;
 		i++;
 	}
-	ft_ls(&(argv[i]), input, argc - i, ".");
+	ft_ls(&(argv[i]), input, argc - i, target_name);
+	free(target_name);
 	free(input);
-	while (1);
 }
