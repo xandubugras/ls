@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:58:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 17:06:29 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 21:00:46 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_file	*create_input_files(int target_num, char **targets, char *current_dir)
 		buf = add_tlist_end(&root, targets[target_num - 1], current_dir);
 		if (buf)
 		{
-			if (buf->type == 'd' && NOT_CUR_DIR(buf))
+			if (buf->type == 'd')
 				buf->go_in_dir = 1;
 		}
 		else
@@ -133,6 +133,7 @@ void	handle_recursion(t_file *root, t_input *input, char *current_dir)
 			new_path = set_dir_path(current_dir, buf->name);
 			ft_printf("%s:\n", new_path);
 			ft_ls(0, input, 0, new_path);
+			ft_printf("\n");
 			free(new_path);
 		}
 		buf = buf->next;

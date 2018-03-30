@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:32:32 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 16:58:28 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/29 19:59:59 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,11 @@ char	*set_dir_path(char *current_dir, char *target_name)
 	char	*new;
 	int		dir_len;
 
-	if (ft_strcmp(current_dir, "."))
-	{
-		dir_len = ft_strlen(current_dir) - 1;
-		new = ft_strjoin(current_dir, target_name);
-		if (new[dir_len] != '/')
-			ft_strinsert(&new, "/", dir_len + 1);
-		return (new);
-	}
-	return (ft_strdup(target_name));
+	dir_len = ft_strlen(current_dir) - 1;
+	new = ft_strjoin(current_dir, target_name);
+	if (new[dir_len] != '/')
+		ft_strinsert(&new, "/", dir_len + 1);
+	return (new);
 }
 
 void	remove_slash_end(char *str)
