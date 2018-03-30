@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 19:43:44 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 17:07:04 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/30 08:14:43 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 	struct group	*grp;
 	char			*full_path;
 
+	new_file->name = ft_strdup(target_name);
 	if (ft_strcmp(current_dir, "."))
 		full_path = set_dir_path(current_dir, target_name);
 	else
@@ -63,15 +64,14 @@ t_file	*set_file(char *target_name, t_file *new_file, char *current_dir)
 		return (0);
 	if (ft_strcmp(current_dir, "."))
 		free(full_path);
-	new_file->name = ft_strdup(target_name);
-	new_file->time_modified = file_info.st_mtimespec.tv_sec;
-	new_file->file_size = file_info.st_size;
-	new_file->num_links = file_info.st_nlink;
-	new_file->blocks = file_info.st_blocks;
 	pwd = getpwuid(file_info.st_uid);
 	grp = getgrgid(file_info.st_gid);
 	new_file->owner_name = ft_strdup(pwd->pw_name);
 	new_file->group_name = ft_strdup(grp->gr_name);
+	new_file->time_modified = file_info.st_mtimespec.tv_sec;
+	new_file->file_size = file_info.st_size;
+	new_file->num_links = file_info.st_nlink;
+	new_file->blocks = file_info.st_blocks;
 	set_permission_and_type(new_file, file_info);
 	return (new_file);
 }
@@ -98,15 +98,15 @@ void	set_permission_and_type(t_file *new_file, struct stat file_info)
 		new_file->type = 's';
 	else
 		new_file->type = 'o';
-	new_file->o_read = file_info.st_mode & S_IRUSR ? 'r' : '-';
-	new_file->o_write = file_info.st_mode & S_IWUSR ? 'w' : '-';
-	new_file->o_execute = file_info.st_mode & S_IXUSR ? 'x' : '-';
-	new_file->g_read = file_info.st_mode & S_IRGRP ? 'r' : '-';
-	new_file->g_write = file_info.st_mode & S_IWGRP ? 'w' : '-';
-	new_file->g_execute = file_info.st_mode & S_IXGRP ? 'x' : '-';
-	new_file->x_read = file_info.st_mode & S_IROTH ? 'r' : '-';
-	new_file->x_write = file_info.st_mode & S_IWOTH ? 'w' : '-';
-	new_file->x_execute = file_info.st_mode & S_IXOTH ? 'x' : '-';
+		new_file->o_read = file_info.st_mode & S_IRUSR ? 'r' : '-';
+		new_file->o_write = file_info.st_mode & S_IWUSR ? 'w' : '-';
+		new_file->o_execute = file_info.st_mode & S_IXUSR ? 'x' : '-';
+		new_file->g_read = file_info.st_mode & S_IRGRP ? 'r' : '-';
+		new_file->g_write = file_info.st_mode & S_IWGRP ? 'w' : '-';
+		new_file->g_execute = file_info.st_mode & S_IXGRP ? 'x' : '-';
+		new_file->x_read = file_info.st_mode & S_IROTH ? 'r' : '-';
+		new_file->x_write = file_info.st_mode & S_IWOTH ? 'w' : '-';
+		new_file->x_execute = file_info.st_mode & S_IXOTH ? 'x' : '-';
 }
 
 /*
@@ -128,16 +128,16 @@ t_file	*create_file(char *target_name, char *current_dir)
 		short_name = ft_get_last_char(target_name, '/') + 1;
 	}
 	if ((directory = opendir(current_dir)) == NULL)
-		return ((t_file *)print_no_file_dir_err(current_dir));
+		return ((t_file *)print_no_file_dir_err(current_dir, current_dir));
 	dir_info = readdir(directory);
 	while (target_name && dir_info && ft_strcmp(dir_info->d_name, short_name))
 		dir_info = readdir(directory);
+	closedir(directory);
 	target_name = target_name == 0 && dir_info ? dir_info->d_name : target_name;
 	if (!dir_info)
-		return ((t_file *)print_no_file_dir_err(target_name));
+		return ((t_file *)print_no_file_dir_err(target_name, current_dir));
 	else
 		new_f = set_file(target_name, new_file(), current_dir);
-	closedir(directory);
 	free(current_dir);
 	return (new_f);
 }

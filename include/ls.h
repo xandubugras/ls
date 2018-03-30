@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:30:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 21:19:15 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/30 08:04:04 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			set_flags(char *arg, t_input *input);
 /*
 **----------------helpers.c------------------------
 */
-void			*print_no_file_dir_err(char *file_name);
+void			*print_no_file_dir_err(char *file_name, char *free_str);
 
 int				compare(t_input *input, t_file *f);
 

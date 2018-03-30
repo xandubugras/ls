@@ -6,7 +6,7 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:58:41 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 21:19:17 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/30 08:15:00 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@ int		ft_ls(char **targets, t_input *input, int target_num, char *current_dir)
 		root = create_input_files(target_num, targets, current_dir);
 	else
 		root = create_all_files(current_dir, input);
-	sort_list(&root, input);
-	print_list(root, input);
-	if (input->ur)
-		set_recursion(root);
-	handle_recursion(root, input, current_dir);
-	buf = root;
-	while (buf)
+	if (root)
 	{
-		root = root->next;
-		free(buf->name);
-		free(buf->owner_name);
-		free(buf->group_name);
-		free(buf);
+		sort_list(&root, input);
+		print_list(root, input);
+		if (input->ur)
+			set_recursion(root);
+		handle_recursion(root, input, current_dir);
 		buf = root;
+		while (buf)
+		{
+			root = root->next;
+			free(buf);
+			buf = root;
+		}
 	}
 	return (0);
 }
@@ -59,7 +59,7 @@ t_file	*create_all_files(char *current_dir, t_input *input)
 	t_file			*root;
 
 	if ((directory = opendir(current_dir)) == NULL)
-		return ((t_file *)print_no_file_dir_err(current_dir));
+		return ((t_file *)print_no_file_dir_err(current_dir, 0));
 	dir_info = readdir(directory);
 	root = 0;
 	while (dir_info != NULL)
@@ -91,8 +91,6 @@ t_file	*create_input_files(int target_num, char **targets, char *current_dir)
 			if (buf->type == 'd')
 				buf->go_in_dir = 1;
 		}
-		else
-			return (0);
 		target_num--;
 	}
 	return (root);

@@ -6,17 +6,19 @@
 /*   By: adubugra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 11:32:32 by adubugra          #+#    #+#             */
-/*   Updated: 2018/03/29 19:59:59 by adubugra         ###   ########.fr       */
+/*   Updated: 2018/03/30 08:08:14 by adubugra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ls.h"
 
-void	*print_no_file_dir_err(char *file_name)
+void	*print_no_file_dir_err(char *file_name, char *free_str)
 {
 	ft_putstr_fd("ls: ", 2);
 	ft_putstr_fd(file_name, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
+	if (free_str)
+		free(free_str);
 	return (0);
 }
 
